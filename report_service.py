@@ -18,7 +18,7 @@ llm = ChatOpenAI(model="gpt-3.5-turbo-0125", api_key=api_key)
 
 # 함수 정의
     # 리턴값 정의
-def investment_report(company, symbol):
+def investment_report(symbol, company):
     # 프롬프트 정의
     system_prompt = """
     Want assistance provided by qualified individuals enabled with experience on understanding charts using technical analysis tools while interpreting macroeconomic environment prevailing across world consequently assisting customers acquire long term advantages requires clear verdicts therefore seeking same through informed predictions written down precisely! First statement contains following content- "Can you tell us what future stock market looks like based upon current conditions ?".
@@ -46,29 +46,65 @@ def investment_report(company, symbol):
     # LCEL chain 객체 생성
     chain = prompt | llm | output_parser
 
-    # 야후파이낸스 api를 통한 필요한 정보 수집, stock 객체 생성
-    company = "Apple Inc"
-    symbol = 'AAPL'
-    stock = Stock(symbol)
+    # company = company
+    # symbol = symbol
+        # 기본정보 :  basic_info
+        # 재무제표: finacial_statement
 
-    # chain.invoke(프롬프트에 넘기는 변수_dict)
+        # stock 정보를 객체로 모듈화해서 불러오기
+    stock = Stock(symbol)
     req_value = {
-        # 회사이름
-        "company" : company,
-        # 기업 기본 정보 
+        "company":company,
+        # 기본정보 :  basic_info
         "basic_info": stock.get_basic_info(),
-        # 기업 재무제표 
-        "financial_statement": stock.get_financial_statement()
+        # 재무제표: finacial_statement
+        "financial_statement" : stock.get_financial_statement()
     }
 
     response = chain.invoke(req_value)
 
-    # 리턴값 정의
     return response
 
-
-# 모듈 테스트
 if __name__ == "__main__":
+    # 회사 이름
     company = "Apple Inc"
-    symbol = 'AAPL'
-    print(investment_report(company, symbol))
+    symbol = "AAPL"  # stock의 symbol 정보
+
+    report = investment_report(symbol, company)
+    print(report)
+
+
+
+
+    # # 야후파이낸스 api를 통한 필요한 정보 수집, stock 객체 생성
+    # company = "Microsoft Corporation Common Stock"
+    # symbol = 'MSFT'
+    
+    # stock = Stock(symbol)
+
+
+
+
+
+
+    # # chain.invoke(프롬프트에 넘기는 변수_dict)
+    # req_value = {
+    #     # 회사이름
+    #     "company" : company,
+    #     # 기업 기본 정보 
+    #     "basic_info": stock.get_basic_info(),
+    #     # 기업 재무제표 
+    #     "financial_statement": stock.get_financial_statement()
+    # }
+
+    # response = chain.invoke(req_value)
+
+    # # 리턴값 정의
+    # return response
+
+
+# # 모듈 테스트
+# if __name__ == "__main__":
+#     company = "Apple Inc"
+#     symbol = 'AAPL'
+#     print(investment_report(company, symbol))

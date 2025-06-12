@@ -9,10 +9,10 @@ class Stock:
 
     # 회사 기본 정보
     def get_basic_info(self):
-        basic_info = pd.DataFrame.from_dict(self.ticker.info, orient='index', columns=['value'])
-        basic_info = basic_info.loc[['longName', 'marketCap', 'industry', 'sector', 'fullTimeEmployees', 'currentPrice', 'enterpriseValue']]
+        basic_info = pd.DataFrame.from_dict(self.ticker.info, orient='index', columns=['values'])
+        return basic_info.loc[['longName', 'marketCap', 'industry', 'sector', 'fullTimeEmployees', 'currentPrice', 'enterpriseValue']]
         
-        return basic_info
+        # return basic_info
     
 
     # 재무제표 수집
