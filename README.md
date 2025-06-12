@@ -39,3 +39,8 @@ pip install streamlit
 ```
 streamlit run main_app.py
 ```
+
+# meilisearch 실행방법
+```
+./meilisearch --master-key="your API-KEY"
+```
